@@ -58,7 +58,7 @@ const createCart = async function (req, res) {
     }
 
     let existCart = await cartModel.findOne({ userId: userIdByParams });
-
+console.log(existCart)
     if (!existCart) {
       let newCart = {
         productId: findProduct._id,
@@ -105,7 +105,7 @@ const createCart = async function (req, res) {
         _id: productId,
         isDeleted: false,
       });
-      const newTotalPrice = existCart.totalPrice + findProduct.price * 1;
+      const newTotalPrice = existCart.totalPrice + findProduct.price ;
       let flag = 0;
       const items = existCart.items;
       for (let i = 0; i < items.length; i++) {
@@ -141,7 +141,7 @@ const createCart = async function (req, res) {
           { userId: userIdByParams },
           {
             $addToSet: { items: addItems },
-            $inc: { totalItems: 1, totalPrice: findProduct.price * 1 },
+            $inc: { totalItems: 1, totalPrice: findProduct.price  },
           },
           { new: true, upsert: true }
         );
